@@ -115,7 +115,10 @@ fn login() -> Result<()> {
         let _sa = std::io::stdin().read_line(&mut email_username).unwrap();
 
         let mut app_password_hasher = Sha256::new();
-        app_password_hasher.update(format!("{}{}", master_pass_input, email_username));
+        app_password_hasher.update(format!(
+            "{}{}{}",
+            master_pass_input, email_username, app_name
+        ));
         let app_pass_input_hash: String = format!("{:X}", app_password_hasher.finalize());
         println!(
             "Your password for {} using {} is: {}",
